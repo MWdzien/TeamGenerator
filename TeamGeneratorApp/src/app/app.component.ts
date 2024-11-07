@@ -1,13 +1,33 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NgForOf, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'TeamGeneratorApp';
+  newMemberName: string = "";
+  members: string[] = [];
+  errorMessage: string = "";
+
+  updateNewMemberName(inputValue: string) {
+    this.newMemberName = inputValue;
+  }
+
+  addMember() {
+    if (!this.newMemberName.replaceAll(" ", "")){
+      this.errorMessage = "Name can't be empty";
+      return;
+    }
+    this.errorMessage = "";
+
+    this.members.push(this.newMemberName);
+    this.newMemberName = "";
+  }
+
+
 }

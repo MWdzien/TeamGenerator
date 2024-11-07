@@ -1,1 +1,3 @@
 # TeamGenerator
+
+Angular learning project
