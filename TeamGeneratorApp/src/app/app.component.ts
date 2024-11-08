@@ -13,6 +13,8 @@ export class AppComponent {
   newMemberName: string = "";
   members: string[] = [];
   errorMessage: string = "";
+  numberOfTeams: number | "" = "";
+  teams: string[][] = [];
 
   updateNewMemberName(inputValue: string) {
     this.newMemberName = inputValue;
@@ -28,6 +30,33 @@ export class AppComponent {
     this.members.push(this.newMemberName);
     this.newMemberName = "";
   }
+
+  updateTeamNumber(inputValue: string){
+    this.numberOfTeams = Number(inputValue);
+  }
+
+  assignTeams(){
+    if (!this.numberOfTeams || this.numberOfTeams <= 0) {
+      this.errorMessage = "Invalid number of teams"
+      return;
+    }
+
+    if (this.numberOfTeams > this.members.length){
+      this.errorMessage = "Not enough members"
+      return;
+    }
+
+    this.errorMessage = "";
+    this.teams = Array.from({ length: this.numberOfTeams }, () => []);
+
+    const shuffledMembers = [...this.members].sort(() => Math.random() - 0.5);
+
+    shuffledMembers.forEach((member, idx) => {
+      const teamIndex = idx % Number(this.numberOfTeams);
+      this.teams[teamIndex].push(member);
+    });
+  }
+
 
 
 }
